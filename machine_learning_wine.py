@@ -40,13 +40,14 @@ plt.show()
 
 #Creating a validation dataset
 
+#trim the data into arrays for training
 array = dataset.values
 X = array[:,13:]
 Y = array[:,13]
 
 #split the loaded data set into two, 75% to train models 25% to validate
 validation_size = 0.25
-seed = 7
+
 #training data in the X_train and Y_train
 #validation data in X_validation and Y_validation
 X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X, Y, test_size=validation_size, random_state=seed)
@@ -56,12 +57,12 @@ X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(
 #Split dataset into 10 parts, train on 9 and test on 1
 
 #Test options and evaluation metric
-seed = 7 #random number seed does not matter
+seed = 7 #the seed is a random number and the specific choice does not matter
 scoring = 'accuracy'
 
 #Build models
 
-#Trying 6 different algorithms
+#Trying 6 different algorithms on the data
 models = []
 #models.append(('LR',LogisticRegression(solver='liblinear',multi_class='ovr')))
 #models.append(('LDA', LinearDiscriminantAnalysis()))
@@ -70,18 +71,16 @@ models.append(('CART', DecisionTreeClassifier()))
 models.append(('NB', GaussianNB() ))
 models.append(('SVM', SVC(gamma='auto')))
 
-#Evaluate each model in turn
-results = []
+#Evaluating each model 
+results = [] 
 names = []
 for name, model in models:
     kfold = model_selection.KFold(n_splits=10, random_state=seed)
     cv_results = model_selection.cross_val_score(model,X_train,Y_train,cv =kfold, scoring = scoring)
-    results.append(cv_results)
+    results.append(cv_results) #adding the results to lists
     names.append(name)
-    msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
-    print(msg)
-
-#Comparing algorithms visually
+    msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std()) #organizing results
+    print(msg) 
 
 #Plotting the mode eval results to compare spread and mean accuracy
 fig = plt.figure()
@@ -100,7 +99,7 @@ print(accuracy_score(Y_validation, predictions))
 #prints the accuracy score as a decimal 0.90 = 90%
 
 print(confusion_matrix(Y_validation, predictions))
-#provides a visually representation of errors made
+#provides a visual representation of errors made
 
 print(classification_report(Y_validation, predictions))
 #provides a breakdown of each class by several parameters
