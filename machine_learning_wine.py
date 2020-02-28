@@ -12,6 +12,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+import seaborn as sns
+sns.set_style('dark')
 
 #Pull dataset from UCI Machine Learning Repository
 #Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
@@ -26,7 +28,7 @@ dataset = pandas.read_csv(url ,names = names)
 print(dataset.shape)
 
 #head allows you see x number of rows of your data
-#print(dataset.head(20))
+print(dataset.head(20))
 
 #decriptions gives the count, mean, min and max values and some percentiles
 print(dataset.describe())
@@ -35,7 +37,7 @@ print(dataset.describe())
 print(dataset.groupby('class').size())
 
 #scatter plot matrix
-scatter_matrix(dataset, figsize = (8,8))
+scatter_matrix(dataset, figsize = (25,25),grid = True, alpha = 0.9)
 plt.show()
 
 #Creating a validation dataset
@@ -48,19 +50,19 @@ Y = array[:,13]
 #split the loaded data set into two, 75% to train models 25% to validate
 validation_size = 0.25
 
+#test options and evaluation metric
+seed = 7 #the seed is a random number and the specific choice does not matter
+scoring = 'accuracy'
+
 #training data in the X_train and Y_train
 #validation data in X_validation and Y_validation
 X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X, Y, test_size=validation_size, random_state=seed)
 
-#Use 10-fold cross validation to estimate accuracy
+#use 10-fold cross validation to estimate accuracy
 
-#Split dataset into 10 parts, train on 9 and test on 1
+#split dataset into 10 parts, train on 9 and test on 1
 
-#Test options and evaluation metric
-seed = 7 #the seed is a random number and the specific choice does not matter
-scoring = 'accuracy'
-
-#Build models
+#build models
 
 #Trying 6 different algorithms on the data
 models = []
@@ -75,7 +77,7 @@ models.append(('SVM', SVC(gamma='auto')))
 results = [] 
 names = []
 for name, model in models:
-    kfold = model_selection.KFold(n_splits=10, random_state=seed)
+    kfold = model_selection.KFold(n_splits=10, random_state=seed,shuffle = True)
     cv_results = model_selection.cross_val_score(model,X_train,Y_train,cv =kfold, scoring = scoring)
     results.append(cv_results) #adding the results to lists
     names.append(name)
