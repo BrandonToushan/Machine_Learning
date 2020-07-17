@@ -1,3 +1,3 @@
 # Basic ML Projects & Resources
 
-Quick and simple projects working with machine learning applications can be found in this repository.
+Quick and simple projects working with SKLearn, Keras, etc. can be found in this repository.
