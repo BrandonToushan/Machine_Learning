@@ -1,3 +1,5 @@
+###PREDICTING WHICH BRAND A CUSTOMER WILL PURCHASE
+
 #Package Imports
 import pandas
 import scipy 
