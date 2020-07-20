@@ -1,6 +1,8 @@
-#Brandon Toushan 10178340
-#July 16, 2020
-#GMMA 867 Predictive Modelling
+###PREDICTING THE SALE PRICE OF A HOME BASED ON 100+ POSSIBLE FACTORS (LINEAR MODEL ONLY)
+###Competition Link: https://www.kaggle.com/c/house-prices-advanced-regression-techniques
+###Best Result: RMSE = 0.12384 (Top 17%)
+###This Kernel: RMSE = 0.12571 (Top 21%)
+
 
 #Package Imports
 import pandas as pd
